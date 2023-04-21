@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Worker Manager</title>
+	<link rel="stylesheet" href="/static/stylesheet.css">
+</head>
+<body>
+	<h1>Worker Manager</h1>
+	<h2>Add Worker</h2>
+	<form method="POST" action="/add" onsubmit="return validateForm()">
+		<div>
+			<label for="name">Name:</label>
+			<input type="text" name="name" id="name" required>
+			<span id="name-error" style="color:red;display:none;">Name field is required</span>
+		</div>
+		<div>
+			<label for="pay">Pay:</label>
+			<input type="number" name="pay" id="pay" required>
+			<span id="pay-error" style="color:red;display:none;">Pay field is required</span>
+		</div>
+		<div>
+			<label for="hours">Hours:</label>
+			<input type="number" name="hours" id="hours" required>
+			<span id="hours-error" style="color:red;display:none;">Hours field is required</span>
+		</div>
+		<button type="submit">Add Worker</button>
+	</form>
+
+	<h2>Worker List</h2>
+	<a href="{{ url_for('export_csv') }}" class="export-button">Export CSV</a>
+	<table class="center">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Pay</th>
+				<th>Hours</th>
+				<th>Total</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for worker in workers %}
+			<tr>
+				<td>{{ worker.name }}</td>
+				<td>{{ worker.pay }}</td>
+				<td>{{ worker.hours }}</td>
+				<td>{{ worker.total }}</td>
+				<td><a href="{{ url_for('remove', index=loop.index0) }}">Remove</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<script src="scripts.js"></script>
+</body>
+</html>
